@@ -12,6 +12,11 @@ Utilizando a LLM Gemini do Google, deixamos o usuário preencher alguns parâmet
 
 Cada questão é relacionada com objetivos de aprendizado e com as competências da Base Nacional Comum Curricular, o que também permitirá a inserção deste conteúdo como parte de um plano pedagógico.
 
+### Técnicas utilizadas
+
+  Utilizamos a geração de conteúdo e prompt engineering para criar um prompt que gere o conteúdo de acordo com as restrições e formatações requeridas.
+  
+
 ## Disponibilidade
 
 A solução pode ser testada em :  https://eduassist-90d96dbb818b.herokuapp.com/Gerar
