@@ -16,6 +16,15 @@ QST_AREAS = [
     "Banco de Dados",
     "Lógica e Linguagens de Programaçao",
     "Visualização de Dados",
+    "Transformação Digital",
+    "Dados, Informação e Conhecimento",
+    "Inovação e Criatividade",
+    "Tecnologias Digitais",
+    "Gestão e Negócios",
+    "Informação e Comunicação",
+    "Produção Cultural",
+    "Design",
+    "Empregabilidade",
 ]
 
 PROMPTS = {
