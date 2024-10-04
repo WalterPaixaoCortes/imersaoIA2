@@ -4,7 +4,7 @@
 import logging
 
 # Import from 3rd party libraries
-import openai
+from openai import OpenAI
 
 import utils.config as config
 
@@ -18,8 +18,13 @@ logging.getLogger("openai").setLevel(logging.WARNING)
 class Openai:
     """OpenAI Connector."""
 
-    @staticmethod
+    client = None
+
+    def __init__(self):
+        self.client = None
+
     def build_prompt(
+        self,
         nivel: str,
         objetivo: str,
         tipo: str,
@@ -79,14 +84,24 @@ class Openai:
                     + """\n- Apresenta-se a resposta correta, e explique a resposta."""
                 )
 
-        return base_prompt
+        competencias = "\n".join(
+            [
+                f'{comp["titulo"]} - {comp["descricao"]}'
+                for comp in config.bncc_competencias
+            ]
+        )
+        bncc = f"""\n- Relacione a questão gerada com até duas competências da BNCC que estão listadas abaixo: 
+                    - Apresente as duas competências selecionadas com o seguinte formato
+                    Compentencia <numero>. <titulo competência> - <descricao competência> - <explicacao sobre como a questão se relaciona com a competência>
+                    {competencias}"""
 
-    @staticmethod
-    def set_key(key: str):
-        openai.api_key = key
+        objetivos = """\n Gere dois objetivos de ensino, seguindo a taxonomia de Bloom, para a questão."""
+        return base_prompt + bncc + objetivos
 
-    @staticmethod
-    def moderate(prompt: str) -> bool:
+    def set_key(self, key: str):
+        self.client = OpenAI(api_key=key)
+
+    def moderate(self, prompt: str) -> bool:
         """Call OpenAI GPT Moderation with text prompt.
         Args:
             prompt: text prompt
@@ -98,15 +113,16 @@ class Openai:
         except Exception as e:
             logging.error(f"OpenAI API error: {e}")
 
-    @staticmethod
-    def complete(prompt: str, temperature: float = 0.9, max_tokens: int = 2048) -> str:
+    def complete(
+        self, prompt: str, temperature: float = 0.9, max_tokens: int = 2048
+    ) -> str:
         """Call OpenAI GPT Completion with text prompt.
         Args:
             prompt: text prompt
         Return: predicted response text
         """
         kwargs = {
-            "model": "gpt-3.5-turbo-16k",
+            "model": "gpt-4o",
             "messages": [{"role": "user", "content": prompt}],
             "temperature": temperature,
             "max_tokens": max_tokens,
@@ -115,16 +131,15 @@ class Openai:
             "presence_penalty": 0,  # default
         }
         try:
-            response = openai.ChatCompletion.create(**kwargs)
+            response = self.client.chat.completions.create(**kwargs)
 
-            lst_resp = [x["message"]["content"] for x in response["choices"]]
+            lst_resp = [x.message.content for x in response.choices]
             return "\n".join(lst_resp)
 
         except Exception as e:
             logging.error(f"OpenAI API error: {e}")
 
-    @staticmethod
-    def image(prompt: str) -> str:
+    def image(self, prompt: str) -> str:
         """Call OpenAI Image Create with text prompt.
         Args:
             prompt: text prompt

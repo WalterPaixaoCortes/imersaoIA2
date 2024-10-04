@@ -3,7 +3,7 @@ import os
 from taipy.gui import Gui, notify, Markdown
 from supabase import create_client, Client
 
-import utils.gemini as genai
+import utils.oai as genai
 import utils.config as config
 
 
@@ -35,7 +35,7 @@ def send_question(state, id, action):
         notify(state, "error", "Defina a ementa da questão!")
         return None
 
-    gemini = genai.Gemini()
+    gemini = genai.Openai()
     state.prompt = gemini.build_prompt(
         state.nivel,
         state.objetivo,
@@ -44,7 +44,7 @@ def send_question(state, id, action):
         state.tem_introducao,
         state.tem_resposta,
     )
-    gemini.set_key(os.getenv("GEMINIAI_API_KEY"))
+    gemini.set_key(os.getenv("OAI_API_KEY"))
     resultado = gemini.complete(state.prompt)
     if resultado:
         state.resultado = resultado
