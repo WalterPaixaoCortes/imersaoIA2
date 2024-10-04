@@ -31,18 +31,30 @@ class Openai:
         area: str,
         tem_introducao: str,
         tem_resposta: str,
+        gera_alternativas: str,
     ):
         if tipo in [
             "Escolha Simples",
             "Escolha Múltipla",
             "Dissertativa",
             "Completar as Lacunas",
+        ]:
+            base_prompt = config.PROMPTS[tipo].format(
+                nivel, objetivo, tipo, area, tem_introducao, tem_resposta
+            )
+        elif tipo in [
             "Lógica - O que Faz",
             "Lógica - Qual o Resultado",
             "Lógica - Qual o Erro",
         ]:
-            base_prompt = config.PROMPTS[tipo].format(
-                nivel, objetivo, tipo, area, tem_introducao, tem_resposta
+            base_prompt = config.PROMPTS2[tipo].format(
+                nivel,
+                objetivo,
+                tipo,
+                area,
+                tem_introducao,
+                tem_resposta,
+                gera_alternativas,
             )
         else:
             base_prompt = f"""Você é um especialista em Ciência de Dados.

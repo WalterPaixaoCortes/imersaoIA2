@@ -82,6 +82,9 @@ PROMPTS = {
             - Cada alternativa contem os termos para completar as lacunas
         - Apresenta-se qual alternativa é a correta. Deve-se elaborar uma explicação para o motivo: {5}
         - Também deve ser entregue a justificativa de porque as outras alternativas são incorretas: {5}""",
+}
+
+PROMPTS2 = {
     "Lógica - O que Faz": """Você é um especialista em Ciência da Computação.
       Elabore uma questão de nível {0} sobre o tema descrito abaixo:
       Tema: {1}
@@ -91,7 +94,7 @@ PROMPTS = {
         - Apresenta-se uma introdução ao conteúdo: {4}
         - A questão é estruturada da seguinte forma:
           - Apresenta-se um código em Python relacionado ao tema. Deve ser um pequeno script de pelo menos 5 linhas  e no máximo 15 linhas.
-          - Pergunta-se o que este código faz:
+          - Pergunta-se o que este código faz, utilizando alternativas de resposta: {6}
         - Apresenta-se a resposta correta: {5}
         - Explique a resposta: {5}""",
     "Lógica - Qual o Resultado": """Você é um especialista em Ciência da Computação.
@@ -104,7 +107,7 @@ PROMPTS = {
         - A questão é estruturada da seguinte forma:
           - Apresenta-se um código em Python relacionado ao tema. Deve ser um pequeno script de pelo menos 5 linhas  e no máximo 15 linhas.
           - Apresenta-se valores que devem ser usados como entrada no código
-          - Pergunta-se qual o resultado que o código gerará com os valores fornecidos
+          - Pergunta-se qual o resultado que o código gerará com os valores fornecidos, utilizando alternativas de resposta: {6}
         - Apresenta-se a resposta correta: {5}
         - Explique a resposta: {5}""",
     "Lógica - Qual o Erro": """Você é um especialista em Ciência da Computação.
@@ -117,7 +120,7 @@ PROMPTS = {
         - O enunciado da questão é estruturado da seguinte forma:
           - Apresenta-se um código em Python que executa alguma operação relacionada ao conteudo mencionado na ementa e que contém um erro.
           - Explica-se qual o resultado esperado quando o código é executado
-          - Pergunta-se qual o erro que o código possui:
+          - Pergunta-se qual o erro que o código possui, utilizando alternativas de resposta: {6}
         - Apresenta-se a resposta correta: {5}
         - Explique a resposta: {5}""",
 }

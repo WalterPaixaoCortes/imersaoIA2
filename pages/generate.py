@@ -43,6 +43,7 @@ def send_question(state, id, action):
         state.area,
         state.tem_introducao,
         state.tem_resposta,
+        state.gera_alternativas,
     )
     gemini.set_key(os.getenv("OAI_API_KEY"))
     resultado = gemini.complete(state.prompt)
@@ -63,6 +64,7 @@ tipo = "Escolha Simples"
 objetivo = "Lógica de Programação com Python: if, for, dicionários e listas"
 tem_resposta = "Sim"
 tem_introducao = "Sim"
+gera_alternativas = "Sim"
 lkp_tipos = config.QST_TIPOS
 lkp_niveis = config.QST_NIVEIS
 lkp_areas = config.QST_AREAS
@@ -91,6 +93,8 @@ gen_q_md = Markdown(
 |>
 <|c4|
 <|{tipo}|selector|lov={lkp_tipos}|dropdown|label=Selecione o Tipo da Questão|>
+<br/>
+<|{gera_alternativas}|selector|lov=Sim;Não|dropdown|label=Tem Alternativas?|>
 <br/>
 <|{nivel}|selector|lov={lkp_niveis}|dropdown|label=Selecione o Nível da Questão|>
 <br/>
