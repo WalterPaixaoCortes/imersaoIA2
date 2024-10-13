@@ -8,6 +8,7 @@ QST_TIPOS = [
     "Lógica - O que Faz",
     "Lógica - Qual o Resultado",
     "Lógica - Qual o Erro",
+    "Lógica - Qual comando",
 ]
 QST_NIVEIS = ["Fácil", "Médio", "Complexo"]
 
@@ -121,6 +122,18 @@ PROMPTS2 = {
           - Apresenta-se um código em Python que executa alguma operação relacionada ao conteudo mencionado na ementa e que contém um erro.
           - Explica-se qual o resultado esperado quando o código é executado
           - Pergunta-se qual o erro que o código possui, utilizando alternativas de resposta: {6}
+        - Apresenta-se a resposta correta: {5}
+        - Explique a resposta: {5}""",
+    "Lógica - Qual comando": """Você é um especialista em Ciência da Computação.
+      Elabore uma questão de nível {0} sobre a ementa descrita abaixo:
+      Ementa: {1}
+      A questão deve ser do tipo: {2}
+      A questão aborda a área: {3}
+      A questão deve ser estruturada da seguinte forma:
+        - Apresenta-se uma introdução ao conteúdo: {4}
+        - O enunciado da questão é estruturado da seguinte forma:
+          - Introduz-se um problema relacionado ao conteúdo mencionado na ementa
+          - Apresenta-se até 5 alternativas de comandos que podem ser utilizados para resolver o problema
         - Apresenta-se a resposta correta: {5}
         - Explique a resposta: {5}""",
 }

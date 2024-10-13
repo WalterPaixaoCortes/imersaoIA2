@@ -46,6 +46,7 @@ class Openai:
             "Lógica - O que Faz",
             "Lógica - Qual o Resultado",
             "Lógica - Qual o Erro",
+            "Lógica - Qual comando",
         ]:
             base_prompt = config.PROMPTS2[tipo].format(
                 nivel,
@@ -94,6 +95,12 @@ class Openai:
                 base_prompt = (
                     base_prompt
                     + """\n- Apresenta-se a resposta correta, e explique a resposta."""
+                )
+
+            if tipo == "Código Python":
+                base_prompt = (
+                    base_prompt
+                    + """\n- Gere dois testes unitários para validar o código, que deverá utilizar um arquivo de entrada."""
                 )
 
         competencias = "\n".join(
