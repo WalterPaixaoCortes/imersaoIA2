@@ -135,7 +135,8 @@ PROMPTS2 = {
           - Introduz-se um problema relacionado ao conteúdo mencionado na ementa
           - Apresenta-se até 5 alternativas de comandos que podem ser utilizados para resolver o problema
         - Apresenta-se a resposta correta: {5}
-        - Explique a resposta: {5}""",
+        - Explique a resposta: {5}
+        - Explique por que as outras alternativas são incorretas: {5}""",
 }
 
 bncc_competencias = [

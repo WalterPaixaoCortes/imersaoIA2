@@ -9,12 +9,16 @@ load_dotenv()
 from pages.generate import gen_q_md
 from pages.visualize import tbl_q_md
 from pages.report import sum_q_md
+from pages.corrigir import cor_q_md
+from pages.corrigirtexto import dis_q_md
 
 pages = {
     "/": "<center><|navbar|></center>",
     "Gerar": gen_q_md,
     "Visualizar": tbl_q_md,
     "Sumario": sum_q_md,
+    "Corrigir": cor_q_md,
+    "CorrigirTexto": dis_q_md,
 }
 
 
