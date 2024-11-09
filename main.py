@@ -13,7 +13,7 @@ from pages.corrigir import cor_q_md
 from pages.corrigirtexto import dis_q_md
 
 pages = {
-    "/": "<center><|navbar|></center>",
+    "/": "<|navbar|>",
     "Gerar": gen_q_md,
     "Visualizar": tbl_q_md,
     "Sumario": sum_q_md,

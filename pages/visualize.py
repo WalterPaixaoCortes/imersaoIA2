@@ -111,8 +111,8 @@ tbl_q_md = Markdown(
 
 <|layout|columns=1fr|gap=5px|class_name=card|
 <|c1|
-<center><|Atualizar|button|on_action=refresh_dados|> <|Exportar|button|on_action=exportar_ppt|> 
-<|{content}|file_download|label=Download|name={link}|active={download_active}|on_action=download_start|></center>
+<|Atualizar|button|on_action=refresh_dados|> <|Exportar|button|on_action=exportar_ppt|> 
+<|{content}|file_download|label=Download|name={link}|active={download_active}|on_action=download_start|>
 |>
 |>
 <|layout|columns=475px 1fr|gap=5px|class_name=card|
@@ -124,7 +124,7 @@ tbl_q_md = Markdown(
 <|{display_area}|text|><br/>
 <|{display_resultado}|input|label="Questão"|multiline=true|class_name=fullwidth|>
 <br/>
-<center><|Salvar|button|on_action=salvar_questao|></center>
+<|Salvar|button|on_action=salvar_questao|>
 |>
 |>
 |>

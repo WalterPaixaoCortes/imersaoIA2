@@ -43,7 +43,7 @@ sum_q_md = Markdown(
         
 # Dashboard
 
-<center><|Atualizar|button|on_action=refresh_dados|></center>
+<|Atualizar|button|on_action=refresh_dados|>
 
 <|layout|columns=1fr 1fr|gap=5px|class_name=card|
 <|c1|

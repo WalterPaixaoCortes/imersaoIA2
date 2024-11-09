@@ -71,7 +71,7 @@ dis_q_md = Markdown(
 <br/>
 <|{prompt}|input|multiline|label=Prompt|class_name=fullwidth|>
 <br />
-<center><|Corrigir|button|on_action=send_question|></center>
+<|Corrigir|button|on_action=send_question|>
 <br/>
 <br/>
 <|{resultado}|input|multiline|label=Resultado|class_name=fullwidth|>

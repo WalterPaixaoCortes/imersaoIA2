@@ -113,7 +113,7 @@ cor_q_md = Markdown(
 |>
 ---
 <br/>
-<center><|Corrigir|button|on_action=evaluate|><|{download_content}|file_download|label=Download|name={download_file}|active={download_ativo}|on_action=download_start|></center>
+<|Corrigir|button|on_action=evaluate|><|{download_content}|file_download|label=Download|name={download_file}|active={download_ativo}|on_action=download_start|>
 <br/>
 <br/>
 <|{resultado}|input|multiline|label=Resultado|class_name=fullwidth|>
