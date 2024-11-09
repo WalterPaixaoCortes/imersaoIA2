@@ -109,7 +109,7 @@ Inclui Resposta?<br/><|{tem_resposta}|toggle|lov=Sim;Não|>
 |>
 ---
 <br/>
-<center><|Gerar Questão|button|on_action=send_question|> <|Salvar Questão|button|on_action=send_database|active={salvar}|></center>
+<|Gerar Questão|button|on_action=send_question|> <|Salvar Questão|button|on_action=send_database|active={salvar}|>
 <br/>
 <br/>
 <|{prompt}|input|multiline|label=Prompt|class_name=fullwidth|>
