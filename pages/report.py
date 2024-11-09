@@ -1,14 +1,19 @@
 # -*- coding: utf-8 -*-
 import os
 from taipy.gui import notify, Markdown
-from supabase import create_client, Client
+from postgrest import SyncPostgrestClient, DEFAULT_POSTGREST_CLIENT_HEADERS
 import pandas as pd
 
 
 def return_dados():
     tbl = None
     try:
-        tbl = supabase.table("questoes_gemini").select("*").order("id").execute()
+        pg_headers = DEFAULT_POSTGREST_CLIENT_HEADERS.copy()
+        pg_headers["Authorization"] = f"Bearer {os.getenv("PGRST_TKN")}"
+        supabase: SyncPostgrestClient = SyncPostgrestClient(
+            os.getenv("PGRST_URL"), schema=os.getenv("PGRST_SCH"), headers=pg_headers
+        )
+        tbl = supabase.from_("questoes_gemini").select("*").order("id").execute()
         df = pd.DataFrame(tbl.data)
     except:
         pass
@@ -18,7 +23,6 @@ def return_dados():
 # Definição de Variável
 url: str = os.environ.get("SUPABASE_URL")
 key: str = os.environ.get("SUPABASE_KEY")
-supabase: Client = create_client(url, key)
 dados = return_dados()
 areas = dados.groupby("area")["id"].count().reset_index()
 areas.rename(columns={"id": "contagem_ids"}, inplace=True)

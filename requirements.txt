@@ -1,5 +1,4 @@
 taipy
-supabase
 pandas
 python-pptx
 google-api-python-client
@@ -7,3 +6,4 @@ google-auth-httplib2
 google-auth-oauthlib
 google-generativeai
 openai
+postgrest-py

@@ -1,7 +1,8 @@
 # -*- coding: utf-8 -*-
 import os
+import traceback
 from taipy.gui import Gui, notify, Markdown
-from supabase import create_client, Client
+from postgrest import SyncPostgrestClient, DEFAULT_POSTGREST_CLIENT_HEADERS
 
 import utils.oai as genai
 import utils.config as config
@@ -11,11 +12,14 @@ def send_database(state, id, action):
     try:
         url: str = os.environ.get("SUPABASE_URL")
         key: str = os.environ.get("SUPABASE_KEY")
-        supabase: Client = create_client(url, key)
-        tbl = supabase.table("questoes_gemini")
+        pg_headers = DEFAULT_POSTGREST_CLIENT_HEADERS.copy()
+        pg_headers["Authorization"] = f"Bearer {os.getenv("PGRST_TKN")}"
+        supabase: SyncPostgrestClient = SyncPostgrestClient(
+            os.getenv("PGRST_URL"), schema=os.getenv("PGRST_SCH"), headers=pg_headers
+        )
+        tbl = supabase.from_("questoes_gemini")
         tbl.insert(
             {
-                "area": state.area,
                 "tipo": state.tipo,
                 "nivel": state.nivel,
                 "prompt": state.prompt,
@@ -25,6 +29,7 @@ def send_database(state, id, action):
         notify(state, "sucesso", "Questão salva!")
         state.salvar = False
     except:
+        print(traceback.format_exc())
         notify(state, "error", "Erro ao salvar a questão")
 
 
@@ -69,7 +74,6 @@ lkp_tipos = config.QST_TIPOS
 lkp_niveis = config.QST_NIVEIS
 lkp_areas = config.QST_AREAS
 salvar = False
-
 prompt = ""
 resultado = ""
 

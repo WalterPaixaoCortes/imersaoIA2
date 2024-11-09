@@ -4,7 +4,7 @@ import os
 from taipy.gui import notify, Markdown
 import pandas as pd
 from utils.ppt import create_presentation
-from supabase import create_client, Client
+from postgrest import SyncPostgrestClient, DEFAULT_POSTGREST_CLIENT_HEADERS
 
 
 def on_checkbox_change(state, linha):
@@ -18,8 +18,12 @@ def on_checkbox_change(state, linha):
 def return_dados():
     tbl = None
     try:
-        supabase: Client = create_client(url, key)
-        tbl = supabase.table("questoes_gemini").select("*").order("id").execute()
+        pg_headers = DEFAULT_POSTGREST_CLIENT_HEADERS.copy()
+        pg_headers["Authorization"] = f"Bearer {os.getenv("PGRST_TKN")}"
+        supabase: SyncPostgrestClient = SyncPostgrestClient(
+            os.getenv("PGRST_URL"), schema=os.getenv("PGRST_SCH"), headers=pg_headers
+        )
+        tbl = supabase.from_("questoes_gemini").select("*").order("id").execute()
         df = pd.DataFrame(tbl.data)
         df["label"] = "Questão " + df["id"].astype(str)
         df["selecionado"] = False
@@ -33,7 +37,6 @@ def return_dados():
 # Definição de Variável
 url: str = os.environ.get("SUPABASE_URL")
 key: str = os.environ.get("SUPABASE_KEY")
-supabase: Client = create_client(url, key)
 dados = return_dados()
 link = ""
 content = None
@@ -62,8 +65,13 @@ def download_start(state):
 
 
 def delete_questao(state, var_name, payload):
+    pg_headers = DEFAULT_POSTGREST_CLIENT_HEADERS.copy()
+    pg_headers["Authorization"] = f"Bearer {os.getenv("PGRST_TKN")}"
+    supabase: SyncPostgrestClient = SyncPostgrestClient(
+        os.getenv("PGRST_URL"), schema=os.getenv("PGRST_SCH"), headers=pg_headers
+    )
     data = (
-        supabase.table("questoes_gemini").delete().eq("id", payload["index"]).execute()
+        supabase.from_("questoes_gemini").delete().eq("id", payload["index"]).execute()
     )
     state.dados = return_dados()
     state.download_active = False
@@ -78,8 +86,13 @@ def show_resultado(state, var_name, payload):
 
 
 def salvar_questao(state):
+    pg_headers = DEFAULT_POSTGREST_CLIENT_HEADERS.copy()
+    pg_headers["Authorization"] = f"Bearer {os.getenv("PGRST_TKN")}"
+    supabase: SyncPostgrestClient = SyncPostgrestClient(
+        os.getenv("PGRST_URL"), schema=os.getenv("PGRST_SCH"), headers=pg_headers
+    )
     data = (
-        supabase.table("questoes_gemini")
+        supabase.from_("questoes_gemini")
         .update({"resultado": state.display_resultado})
         .eq("id", state.display_index)
         .execute()

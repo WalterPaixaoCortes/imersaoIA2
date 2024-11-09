@@ -1,31 +1,8 @@
 # -*- coding: utf-8 -*-
 import os
 from taipy.gui import Gui, notify, Markdown
-from supabase import create_client, Client
 
 import utils.oai as genai
-import utils.config as config
-
-
-def send_database(state, id, action):
-    try:
-        url: str = os.environ.get("SUPABASE_URL")
-        key: str = os.environ.get("SUPABASE_KEY")
-        supabase: Client = create_client(url, key)
-        tbl = supabase.table("questoes_gemini")
-        tbl.insert(
-            {
-                "area": state.area,
-                "tipo": state.tipo,
-                "nivel": state.nivel,
-                "prompt": state.prompt,
-                "resultado": state.resultado,
-            }
-        ).execute()
-        notify(state, "sucesso", "Questão salva!")
-        state.salvar = False
-    except:
-        notify(state, "error", "Erro ao salvar a questão")
 
 
 def send_question(state, id, action):
@@ -94,7 +71,7 @@ dis_q_md = Markdown(
 <br/>
 <|{prompt}|input|multiline|label=Prompt|class_name=fullwidth|>
 <br />
-<center><|Gerar Questão|button|on_action=send_question|></center>
+<center><|Corrigir|button|on_action=send_question|></center>
 <br/>
 <br/>
 <|{resultado}|input|multiline|label=Resultado|class_name=fullwidth|>
