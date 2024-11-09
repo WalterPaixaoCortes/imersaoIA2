@@ -15,14 +15,13 @@ def return_dados():
         )
         tbl = supabase.from_("questoes_gemini").select("*").order("id").execute()
         df = pd.DataFrame(tbl.data)
+        supabase.aclose()
     except:
         pass
     return df
 
 
 # Definição de Variável
-url: str = os.environ.get("SUPABASE_URL")
-key: str = os.environ.get("SUPABASE_KEY")
 dados = return_dados()
 areas = dados.groupby("area")["id"].count().reset_index()
 areas.rename(columns={"id": "contagem_ids"}, inplace=True)

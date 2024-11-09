@@ -10,8 +10,6 @@ import utils.config as config
 
 def send_database(state, id, action):
     try:
-        url: str = os.environ.get("SUPABASE_URL")
-        key: str = os.environ.get("SUPABASE_KEY")
         pg_headers = DEFAULT_POSTGREST_CLIENT_HEADERS.copy()
         pg_headers["Authorization"] = f"Bearer {os.getenv("PGRST_TKN")}"
         supabase: SyncPostgrestClient = SyncPostgrestClient(
@@ -24,10 +22,12 @@ def send_database(state, id, action):
                 "nivel": state.nivel,
                 "prompt": state.prompt,
                 "resultado": state.resultado,
+                "area": state.area,
             }
         ).execute()
         notify(state, "sucesso", "Questão salva!")
         state.salvar = False
+        supabase.aclose()
     except:
         print(traceback.format_exc())
         notify(state, "error", "Erro ao salvar a questão")

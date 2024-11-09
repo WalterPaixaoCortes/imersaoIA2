@@ -29,14 +29,13 @@ def return_dados():
         df["selecionado"] = False
         df.set_index("id", inplace=True)
         df.index.name = "index"
+        supabase.aclose()
     except:
         pass
     return df
 
 
 # Definição de Variável
-url: str = os.environ.get("SUPABASE_URL")
-key: str = os.environ.get("SUPABASE_KEY")
 dados = return_dados()
 link = ""
 content = None
@@ -73,6 +72,7 @@ def delete_questao(state, var_name, payload):
     data = (
         supabase.from_("questoes_gemini").delete().eq("id", payload["index"]).execute()
     )
+    supabase.aclose()
     state.dados = return_dados()
     state.download_active = False
     notify(state, "success", "Questão removida!")
@@ -97,6 +97,7 @@ def salvar_questao(state):
         .eq("id", state.display_index)
         .execute()
     )
+    supabase.aclose()
     state.dados = return_dados()
     state.download_active = False
     notify(state, "success", "Questão alterada!")
